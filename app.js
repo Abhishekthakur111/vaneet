@@ -13,9 +13,10 @@ const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 app.use(express.json({ verify: (req, res, buf) => (req.rawBody = buf) }));
 
 app.post("/gitWebhook", (req, res) => {
+  console.log("reqw,=.head",req.headers)
   try {
-    const signature = req.headers["x-hub-signature-256"]; // GitHub provides this header
-    const payload = req.rawBody;
+      const signature = req.headers['x-hub-signature'] || req.headers['x-hub-signature-256'];
+      const payload = req.rawBody;
 
     if (!signature) {
       console.error("Signature missing from headers.");
