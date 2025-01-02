@@ -88,7 +88,7 @@ app.post("/gitWebhook", (req, res) => {
 });
 
 app.get("/",async(req,res)=>{
-    res.send("Hello")
+    res.send("Hello vaneet ")
 })
 
 app.listen(PORT,()=>{
