@@ -35,22 +35,21 @@ app.post("/gitWebhook", (req, res) => {
         const installDependencies = packagesChanged
           ? `npm install`
           : `echo "No new dependencies to install"`;
-
-        // Step 4: Perform PM2 restart after all operations
-        exec(
-          `cd ${repoPath} && ${installDependencies} && pm2 restart all`,
-          (pm2Error, pm2Stdout, pm2Stderr) => {
-            if (pm2Error) {
-              console.error(`Error during PM2 restart: ${pm2Error.message}`);
-              return res.status(500).send("Error during PM2 restart");
-            }
-
-            console.log(`PM2 restart stdout: ${pm2Stdout}`);
-            console.error(`PM2 restart stderr: ${pm2Stderr}`);
-            res.status(200).send("Git pull, dependency install, and PM2 restart executed successfully");
-          }
-        );
       });
+       // Step 4: Perform PM2 restart after all operations
+       exec(
+        `cd ${repoPath} && pm2 restart all`,
+        (pm2Error, pm2Stdout, pm2Stderr) => {
+          if (pm2Error) {
+            console.error(`Error during PM2 restart: ${pm2Error.message}`);
+            return res.status(500).send("Error during PM2 restart");
+          }
+
+          console.log(`PM2 restart stdout: ${pm2Stdout}`);
+          console.error(`PM2 restart stderr: ${pm2Stderr}`);
+          res.status(200).send("Git pull, and PM2 restart executed successfully");
+        }
+      );
     });
   } catch (error) {
     console.error("Error handling webhook:", error);
