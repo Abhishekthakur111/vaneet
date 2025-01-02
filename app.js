@@ -84,7 +84,7 @@ app.post("/gitWebhook", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello pm2 restart all test");
+  res.send("Hello pm2 restart all test 1");
 });
 
 app.listen(PORT, () => {
